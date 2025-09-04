@@ -1,0 +1,6 @@
+@GAC.Integration.Api_HostAddress = http://localhost:5246
+
+GET {{GAC.Integration.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,19 @@
+﻿using GAC.Integration.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace GAC.Integration.Infrastructure.Data
+{
+    public class ServiceDbContext : DbContext
+    {
+        public ServiceDbContext(DbContextOptions<ServiceDbContext> options) : base(options)
+        {
+        }
+
+        public virtual DbSet<Customer> Customers { get; set; }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+    }
+}
