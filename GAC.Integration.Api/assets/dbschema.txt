@@ -1,0 +1,56 @@
+﻿-- 1. Customer Master Data
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY IDENTITY(1,1),
+    ExternalCustomerIdentifier NVARCHAR(100) NOT NULL,
+    Name NVARCHAR(255) NOT NULL,
+    Address NVARCHAR(500),
+    CreatedAt DATETIME DEFAULT GETDATE()
+);
+
+-- 2. Product Master Data
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY IDENTITY(1,1),
+    ProductCode NVARCHAR(100) NOT NULL UNIQUE,
+    Title NVARCHAR(255) NOT NULL,
+    Description NVARCHAR(1000),
+    Length DECIMAL(10,2),
+    Width DECIMAL(10,2),
+    Height DECIMAL(10,2),
+    Weight DECIMAL(10,2),
+    CreatedAt DATETIME DEFAULT GETDATE()
+);
+
+-- 3. Purchase Orders (POs)
+CREATE TABLE PurchaseOrders (
+    PurchaseOrderID INT PRIMARY KEY IDENTITY(1,1),
+    ExternalOrderID NVARCHAR(100) NOT NULL,
+    ProcessingDate DATETIME NOT NULL,
+    CustomerID INT FOREIGN KEY REFERENCES Customers(CustomerID),
+    CreatedAt DATETIME DEFAULT GETDATE()
+);
+
+-- 4. Purchase Order Line Items
+CREATE TABLE PurchaseOrderItems (
+    POItemID INT PRIMARY KEY IDENTITY(1,1),
+    PurchaseOrderID INT FOREIGN KEY REFERENCES PurchaseOrders(PurchaseOrderID),
+    ProductID INT FOREIGN KEY REFERENCES Products(ProductID),
+    Quantity INT NOT NULL
+);
+
+-- 5. Sales Orders (SOs)
+CREATE TABLE SalesOrders (
+    SalesOrderID INT PRIMARY KEY IDENTITY(1,1),
+    ExternalOrderID NVARCHAR(100) NOT NULL,
+    ProcessingDate DATETIME NOT NULL,
+    CustomerID INT FOREIGN KEY REFERENCES Customers(CustomerID),
+    ShipmentAddress NVARCHAR(500),
+    CreatedAt DATETIME DEFAULT GETDATE()
+);
+
+-- 6. Sales Order Line Items
+CREATE TABLE SalesOrderItems (
+    SOItemID INT PRIMARY KEY IDENTITY(1,1),
+    SalesOrderID INT FOREIGN KEY REFERENCES SalesOrders(SalesOrderID),
+    ProductID INT FOREIGN KEY REFERENCES Products(ProductID),
+    Quantity INT NOT NULL
+);
