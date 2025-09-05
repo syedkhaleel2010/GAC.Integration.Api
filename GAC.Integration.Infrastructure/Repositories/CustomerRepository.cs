@@ -2,10 +2,10 @@
 using GAC.Integration.Domain.Dto;
 using GAC.Integration.Domain.Entities.GAC.Integration.Domain.Entities;
 using GAC.Integration.Infrastructure.Data;
-using GAC.Integration.Infrastructure.IRepositories;
+using GAC.Integration.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-namespace MG.Marine.Ticketing.SQL.Infrastructure.Repositories
+namespace MG.Marine.Ticketing.SQL.Infrastructure
 {
     public class CustomerRepository : ICustomerRepository
     {
@@ -30,9 +30,17 @@ namespace MG.Marine.Ticketing.SQL.Infrastructure.Repositories
         }
         public async Task<bool> UpdateCustomer(Customer customer)
         {
-            if (customer == null)
-                throw new ArgumentNullException(nameof(customer));
-            _dbContext.Customers.Update(customer);
+
+            var entity = _dbContext.Customers.Find(customer.ID);
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity), "Customer not found");
+
+            entity.Name = customer.Name ?? string.Empty;
+            entity.Address = customer.Address;
+            entity.UpdatedBy = customer.UpdatedBy;
+            entity.UpdatedAt = customer.UpdatedAt;
+
+            _dbContext.Customers.Update(entity);
            await _unitOfWork.CommitAsync();
             return true;
         }
@@ -41,6 +49,12 @@ namespace MG.Marine.Ticketing.SQL.Infrastructure.Repositories
         {
             var entity = await _dbContext.Customers.ToListAsync();
             return _mapper.Map<IEnumerable<CustomerDto>>(entity);
+        }
+
+        public async Task<bool> CustomerExists(string id)
+        {
+            var isExist = _dbContext.Customers.Any(x=>x.ID == id);
+            return await Task.FromResult(isExist);
         }
     }
 }

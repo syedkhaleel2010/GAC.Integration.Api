@@ -1,6 +1,8 @@
 using GAC.Integration.Api.Middleware;
 using GAC.Integration.Domain;
+using MG.Marine.Ticketing.API.DependencyConfig;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -34,8 +36,24 @@ builder.Services.AddAuthentication(options =>
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddAutoMapper(cfg => cfg.AddProfile<DtoEntityMapper>());
+builder.Services.AddDbContext(builder.Configuration);
+builder.Services.AddRepositories();
+builder.Services.AddDataServices();
+// Fix for 'Configuration' issue
+builder.Services.AddHttpClients(builder.Configuration);
 
-builder.Services.AddCoresAllowAll();
+// Fix for 'AddCoresAllowAll' issue
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+        {
+       builder.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+   });
+});
+builder.Services.AddCors(options => options.AddPolicy("AllowAll", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
@@ -48,8 +66,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication(); // Add this line
+app.UseAuthentication();
 app.UseAuthorization();
+
+// Apply the CORS policy
+app.UseCors("AllowAll");
 
 app.MapControllers();
 

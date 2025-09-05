@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GAC.Integration.Infrastructure.IRepositories
+namespace GAC.Integration.Infrastructure
 {
     public interface ICustomerRepository
     {
         Task<bool> CreateCustomer(Customer entity);
         Task<bool> UpdateCustomer(Customer entity);
+        Task<bool> CustomerExists(string id);
         Task<IEnumerable<CustomerDto>> GetCustomers();
     }
 }

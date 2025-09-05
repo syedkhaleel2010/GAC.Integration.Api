@@ -2,6 +2,7 @@
 using GAC.Integration.Infrastructure.Data;
 using GAC.Integration.Service;
 using GAC.Integration.Service.Interfaces;
+using GAC.Integration.Service.Validation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -31,32 +32,35 @@ namespace MG.Marine.Ticketing.API.DependencyConfig
 
         public static void AddRepositories(this IServiceCollection services)
         {
+            var assembly = Assembly.Load("GAC.Integration.Infrastructure");
+            var types = assembly.GetTypes();
 
-            var types = Assembly.Load(new AssemblyName("GAC.Integration.Infrastructure"))
-                                .DefinedTypes
-                                .ToList();
-            var repos = new Dictionary<Type, Type>();
-            foreach (var typeInfo in types)
+            foreach (var type in types)
             {
-                var repoInterface = typeInfo.ImplementedInterfaces.FirstOrDefault(e => e.GetInterfaces().Any(i => i.IsGenericType));
-                if (repoInterface == null)
-                    continue;
+                // Register only concrete, non-abstract classes
+                if (type.IsClass && !type.IsAbstract)
+                {
+                    // Find all interfaces implemented by this class that are in the IRepositories namespace
+                    var interfaces = type.GetInterfaces()
+                        .Where(i => i.Namespace != null && i.Namespace.Contains("GAC.Integration.Infrastructure"));
 
-                repos.Add(repoInterface, typeInfo);
-            }
-
-            foreach (var repo in repos)
-            {
-                services.AddScoped(repo.Key, repo.Value);
+                    foreach (var iface in interfaces)
+                    {
+                        services.AddScoped(iface, type);
+                    }
+                }
             }
         }
+
 
         public static void AddDataServices(this IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<HasPermissionFilterOptions>(provider => new HasPermissionFilterOptions("YourStringValue","dummy"));
             services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             services.AddScoped<IUserSession,UserSession>();
-            
+            services.AddScoped<IValidationService, ValidationService>();
+            services.AddScoped<ICustomerService,CustomerService>();
         }
 
         public static void AddOptionsBinders(this IServiceCollection services, IConfiguration configuration)
@@ -65,7 +69,7 @@ namespace MG.Marine.Ticketing.API.DependencyConfig
          //   services.AddOptions<DocumentManagementOptions>().Bind(configuration.GetSection("DocumentManagement"));
         }
 
-        public static void AddDbContext(this IServiceCollection services, IConfiguration configuration, IHostEnvironment env)
+        public static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("DB");
             services.AddDbContext<ServiceDbContext>(options =>

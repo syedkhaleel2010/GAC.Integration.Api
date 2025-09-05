@@ -16,5 +16,6 @@ namespace GAC.Integration.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
         }
+       
     }
 }

@@ -8,16 +8,17 @@ namespace GAC.Integration.Domain.Entities
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Diagnostics.CodeAnalysis;
+    using System.Security.Principal;
 
     namespace GAC.Integration.Domain.Entities
     {
         [Table("Customers", Schema = "dbo")]
-        public class Customer
+        public class Customer : EntityBase
         {
             [Key]
             [Required]
             [StringLength(50)]
-            public string CustomerID { get; set; }
+            public string ID { get; set; }
 
             [Required]
             [StringLength(100)]
@@ -35,6 +36,9 @@ namespace GAC.Integration.Domain.Entities
 
             [Required]
             public string CreatedBy { get; set; }
+
+            public DateTime? UpdatedAt { get; set; }
+            public String UpdatedBy { get; set; }
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using GAC.Integration.Service.Interfaces;
+﻿using GAC.Integration.Domain;
+using GAC.Integration.Service.Interfaces;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
@@ -22,13 +23,13 @@ namespace GAC.Integration.Service
         protected void SetCreatedBy(EntityBase entity)
         {
             entity.CreatedBy = GetUsername() ?? "system";
-            entity.CreatedDate = DateTime.Now;
+            entity.CreatedAt = DateTime.Now;
         }
 
         protected void SetUpdatedBy(EntityBase entity)
         {
             entity.UpdatedBy = GetUsername() ?? "system";
-            entity.UpdatedDate = DateTime.Now;
+            entity.UpdatedAt = DateTime.Now;
         }
 
         protected async Task<HttpClient> AddTokenWithHttpClient(HttpClient httpClient, string token)
