@@ -1,4 +1,5 @@
 using GAC.Integration.Api.Middleware;
+using GAC.Integration.Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -32,7 +33,9 @@ builder.Services.AddAuthentication(options =>
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<DtoEntityMapper>());
 
+builder.Services.AddCoresAllowAll();
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();

@@ -10,6 +10,6 @@ namespace GAC.Integration.Service.Interfaces
     public interface IUserSession
     {
         User GetUser();
-        bool HasPermission(string process, string subProcess);
+       
     }
 }

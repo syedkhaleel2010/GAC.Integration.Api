@@ -11,11 +11,16 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Quartz" Version="3.15.0" />
+    <PackageReference Include="Quartz.AspNetCore" Version="3.15.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GAC.Integration.Domain\GAC.Integration.Domain.csproj" />
+    <ProjectReference Include="..\GAC.Integration.Infrastructure\GAC.Integration.Infrastructure.csproj" />
+    <ProjectReference Include="..\GAC.Integration.Service\GAC.Integration.Service.csproj" />
   </ItemGroup>
 
 </Project>

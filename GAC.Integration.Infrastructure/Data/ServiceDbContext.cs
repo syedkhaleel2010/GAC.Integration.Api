@@ -1,4 +1,5 @@
 ﻿using GAC.Integration.Domain.Entities;
+using GAC.Integration.Domain.Entities.GAC.Integration.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GAC.Integration.Infrastructure.Data
