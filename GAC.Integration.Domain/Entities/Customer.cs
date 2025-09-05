@@ -30,15 +30,6 @@ namespace GAC.Integration.Domain.Entities
 
             [StringLength(300)]
             public string? Address { get; set; }
-
-            [Required]
-            public DateTime CreatedAt { get; set; }
-
-            [Required]
-            public string CreatedBy { get; set; }
-
-            public DateTime? UpdatedAt { get; set; }
-            public String UpdatedBy { get; set; }
         }
     }
 
