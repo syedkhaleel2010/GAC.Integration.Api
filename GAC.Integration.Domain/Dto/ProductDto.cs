@@ -5,6 +5,7 @@ namespace GAC.Integration.Domain.Dto
 {
     public class ProductDto
     {
+        public Guid ID { get; set; }
         public string ProductCode { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;

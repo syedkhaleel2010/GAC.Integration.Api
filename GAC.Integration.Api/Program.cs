@@ -1,15 +1,19 @@
-using GAC.Integration.Api.Middleware;
+using GAC.Integration.Api.MiddleWare;
 using GAC.Integration.Domain;
-using MG.Marine.Ticketing.API.DependencyConfig;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new UpperCaseGuidConverter());
+    });
+
+
 
 // JWT Authentication configuration
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "A@9v!p#Z2^bL$w8&Qx*G7m%T1s)R4u{EA@9v!p#Z2^bL$w8&Qx*G7m%T1s)R4u{E";

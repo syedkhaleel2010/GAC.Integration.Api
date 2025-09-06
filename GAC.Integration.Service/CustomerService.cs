@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using GAC.Integration.Domain.Dto;
-using GAC.Integration.Domain.Entities.GAC.Integration.Domain.Entities;
+using GAC.Integration.Domain.Entities;
 using GAC.Integration.Infrastructure;
 using GAC.Integration.Service.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,12 +36,10 @@ namespace GAC.Integration.Service
         {
             // Implementation for creating a customer  
             _logger.LogInformation("Creating a new customer.");
-            customerDto.ID = Guid.NewGuid().ToString();
-            customerDto.CreatedAt = DateTime.UtcNow;
+            customerDto.ID = Guid.NewGuid();
             customerDto.ExternalCustomerIdentifier = "CUST-" + Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
-            customerDto.CreatedBy = _userSession?.GetUser()?.Name ?? "system";
             var entity = _mapper.Map<Customer>(customerDto);
-            
+            SetCreatedBy(entity); 
             await _customerRepository.CreateCustomer(entity);
             return await Task.FromResult(customerDto);
         }

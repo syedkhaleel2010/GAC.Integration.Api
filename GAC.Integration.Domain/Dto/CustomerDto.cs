@@ -5,7 +5,7 @@ namespace GAC.Integration.Domain.Dto
 {
     public class CustomerDto
     {
-        public string ID { get; set; } = string.Empty;
+        public Guid ID { get; set; } 
         public string ExternalCustomerIdentifier { get; set; }= string.Empty;
         public string Name { get; set; } = string.Empty;
         public string? Address { get; set; }

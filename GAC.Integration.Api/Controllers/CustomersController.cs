@@ -1,11 +1,8 @@
 ﻿using FluentValidation;
 using GAC.Integration.Domain.Dto;
 using GAC.Integration.Service.Interfaces;
-using GAC.Integration.Service.Validation;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
 
 namespace GAC.Integration.Api.Controllers
 {
@@ -16,7 +13,6 @@ namespace GAC.Integration.Api.Controllers
     {
         private readonly ILogger<CustomersController> _logger;
         private readonly ICustomerService _customerService;
-
 
         public CustomersController(ILogger<CustomersController> logger, 
             ICustomerService customerService) : base(logger)
@@ -44,7 +40,6 @@ namespace GAC.Integration.Api.Controllers
         {
             try
             {
-
                 customer = await _customerService.UpdateCustomerAsync(customer);
                 return OkServiceResponse(customer);
             }
@@ -74,6 +69,5 @@ namespace GAC.Integration.Api.Controllers
                 return HandleOtherException(ex);
             }
         }
-
     }
 }

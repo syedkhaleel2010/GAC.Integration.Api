@@ -1,10 +1,5 @@
 ﻿using GAC.Integration.Domain.Dto;
-using GAC.Integration.Domain.Entities.GAC.Integration.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GAC.Integration.Domain.Entities;
 
 namespace GAC.Integration.Infrastructure
 {
@@ -12,7 +7,7 @@ namespace GAC.Integration.Infrastructure
     {
         Task<bool> CreateCustomer(Customer entity);
         Task<bool> UpdateCustomer(Customer entity);
-        Task<bool> CustomerExists(string id);
+        Task<bool> CustomerExists(Guid id);
         Task<IEnumerable<CustomerDto>> GetCustomers();
     }
 }

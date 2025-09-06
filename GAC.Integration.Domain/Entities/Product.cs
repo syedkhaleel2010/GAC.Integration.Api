@@ -6,6 +6,11 @@ namespace GAC.Integration.Domain.Entities
     [Table("Products", Schema = "dbo")]
     public class Product : EntityBase
     {
+        public Product()
+        {
+            PurchaseOrderItems = new HashSet<PurchaseOrderItems>();
+        }
+
         [Required]
         [StringLength(50)]
         public string ProductCode { get; set; } = string.Empty;
@@ -17,6 +22,7 @@ namespace GAC.Integration.Domain.Entities
         public decimal? Length { get; set; } 
         public decimal? Width { get; set; } 
         public decimal? Height { get; set; } 
-        public decimal? Weight { get; set; } 
+        public decimal? Weight { get; set; }
+        public virtual ICollection<PurchaseOrderItems> PurchaseOrderItems { get; set; }
     }
 }

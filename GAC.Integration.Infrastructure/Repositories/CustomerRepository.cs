@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using GAC.Integration.Domain.Dto;
-using GAC.Integration.Domain.Entities.GAC.Integration.Domain.Entities;
+using GAC.Integration.Domain.Entities;
 using GAC.Integration.Infrastructure.Data;
 using GAC.Integration.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -51,7 +51,7 @@ namespace MG.Marine.Ticketing.SQL.Infrastructure
             return _mapper.Map<IEnumerable<CustomerDto>>(entity);
         }
 
-        public async Task<bool> CustomerExists(string id)
+        public async Task<bool> CustomerExists(Guid id)
         {
             var isExist = _dbContext.Customers.Any(x=>x.ID == id);
             return await Task.FromResult(isExist);

@@ -57,14 +57,14 @@ namespace GAC.Integration.Api.Controllers
             }
         }
 
-        [HttpDelete("DeleteProduct/{productCode}")]
-        public async Task<IActionResult> DeleteProduct(string productCode)
+        [HttpDelete("DeleteProduct/{Id}")]
+        public async Task<IActionResult> DeleteProduct(Guid Id)
         {
             try
             {
-                var result = await _productService.DeleteProductAsync(productCode);
+                var result = await _productService.DeleteProductAsync(Id);
                 if (!result)
-                    return NotFound($"Product with code '{productCode}' not found.");
+                    return NotFound($"Product with code '{Id}' not found.");
                 return OkServiceResponse(result, "Product deleted successfully.");
             }
             catch (Exception ex)
@@ -74,14 +74,14 @@ namespace GAC.Integration.Api.Controllers
             }
         }
 
-        [HttpGet("GetProductById/{productCode}")]
-        public async Task<IActionResult> GetProductById(string productCode)
+        [HttpGet("GetProductById/{Id}")]
+        public async Task<IActionResult> GetProductById(Guid Id)
         {
             try
             {
-                var result = await _productService.GetProductByIdAsync(productCode);
+                var result = await _productService.GetProductByIdAsync(Id);
                 if (result == null)
-                    return NotFound($"Product with code '{productCode}' not found.");
+                    return NotFound($"Product with code '{Id}' not found.");
                 return OkServiceResponse(result);
             }
             catch (Exception ex)

@@ -9,9 +9,9 @@ namespace GAC.Integration.Service.Interfaces
     {
         Task<ProductDto> CreateProductAsync(ProductDto productDto);
         Task<ProductDto> UpdateProductAsync(ProductDto productDto);
-        Task<bool> DeleteProductAsync(string productCode);
-        Task<ProductDto> GetProductByIdAsync(string productCode);
+        Task<bool> DeleteProductAsync(Guid productCode);
+        Task<ProductDto> GetProductByIdAsync(Guid productCode);
         Task<IEnumerable<ProductDto>> GetProductsAsync();
-        Task<bool> ProductExistsAsync(string productCode);
+        Task<bool> ProductExistsAsync(Guid productCode);
     }
 }

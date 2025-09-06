@@ -1,8 +1,5 @@
 ﻿using GAC.Integration.Domain.Dto;
 using GAC.Integration.Domain.Entities;
-using GAC.Integration.Domain.Entities.GAC.Integration.Domain.Entities;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GAC.Integration.Infrastructure.IRepositories
 {
@@ -10,9 +7,9 @@ namespace GAC.Integration.Infrastructure.IRepositories
     {
         Task<bool> CreateProduct(Product entity);
         Task<bool> UpdateProduct(Product entity);
-        Task<bool> DeleteProduct(string id);
-        Task<ProductDto> GetProductById(string id);
+        Task<bool> DeleteProduct(Guid id);
+        Task<ProductDto> GetProductById(Guid id);
         Task<IEnumerable<ProductDto>> GetProducts();
-        Task<bool> ProductExists(string id);
+        Task<bool> ProductExists(Guid id);
     }
 }

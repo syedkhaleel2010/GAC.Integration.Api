@@ -49,7 +49,7 @@ namespace MG.Marine.Ticketing.SQL.Infrastructure
             return true;
         }
 
-        public async Task<bool> DeleteProduct(string id)
+        public async Task<bool> DeleteProduct(Guid id)
         {
             var entity = await _dbContext.Products.FindAsync(id);
             if (entity == null)
@@ -60,7 +60,7 @@ namespace MG.Marine.Ticketing.SQL.Infrastructure
             return true;
         }
 
-        public async Task<ProductDto> GetProductById(string id)
+        public async Task<ProductDto> GetProductById(Guid id)
         {
             var entity = await _dbContext.Products.FindAsync(id);
             return entity != null ? _mapper.Map<ProductDto>(entity) : null;
@@ -72,9 +72,9 @@ namespace MG.Marine.Ticketing.SQL.Infrastructure
             return _mapper.Map<IEnumerable<ProductDto>>(entities);
         }
 
-        public async Task<bool> ProductExists(string id)
+        public async Task<bool> ProductExists(Guid id)
         {
-            var exists = await _dbContext.Products.AnyAsync(x => x.ProductCode == id);
+            var exists = await _dbContext.Products.AnyAsync(x => x.ID == id);
             return exists;
         }
     }

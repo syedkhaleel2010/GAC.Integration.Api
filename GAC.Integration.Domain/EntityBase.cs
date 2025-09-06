@@ -3,7 +3,7 @@
 namespace GAC.Integration.Domain
 {
 
-    public class EntityBase : EntityBase<string>, IEntityBase, IEntityBase<string>
+    public class EntityBase : EntityBase<Guid>, IEntityBase, IEntityBase<Guid>
     {
     }
 
@@ -34,7 +34,7 @@ namespace GAC.Integration.Domain
 
         string UpdatedBy { get; set; }
     }
-    public interface IEntityBase : IEntityBase<string>
+    public interface IEntityBase : IEntityBase<Guid>
     {
     }
 }

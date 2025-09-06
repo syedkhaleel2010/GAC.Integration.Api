@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 
-namespace GAC.Integration.Api.Middleware
+namespace GAC.Integration.Api.MiddleWare
 {
     public class ExceptionHandlingMiddleware
     {

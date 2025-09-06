@@ -1,21 +1,15 @@
-﻿using AutoMapper;
-using GAC.Integration.Infrastructure.Data;
+﻿using GAC.Integration.Infrastructure.Data;
 using GAC.Integration.Service;
 using GAC.Integration.Service.Interfaces;
 using GAC.Integration.Service.Validation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Quartz;
 using Quartz.AspNetCore;
 using Quartz.Simpl;
 using System.Data;
 using System.Reflection;
-using System.Text;
 
-namespace MG.Marine.Ticketing.API.DependencyConfig
+namespace GAC.Integration.Api.MiddleWare
 {
     public static class DependencyConfig
     {
@@ -61,6 +55,9 @@ namespace MG.Marine.Ticketing.API.DependencyConfig
             services.AddScoped<IUserSession,UserSession>();
             services.AddScoped<IValidationService, ValidationService>();
             services.AddScoped<ICustomerService,CustomerService>();
+            services.AddScoped<IProductService,ProductService>();
+            services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
+            services.AddScoped<ISalesOrderService, SalesOrderService>();
         }
 
         public static void AddOptionsBinders(this IServiceCollection services, IConfiguration configuration)

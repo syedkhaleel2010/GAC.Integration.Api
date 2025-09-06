@@ -10,9 +10,9 @@ namespace GAC.Integration.Service.Interfaces
     public interface IPurchaseOrderService
     {
         Task<PurchaseOrderDto> CreatePurchaseOrder(PurchaseOrderDto purchaseOrder);
-        Task<PurchaseOrderDto> GetByIdAsync(string id);
+        Task<PurchaseOrderDto> GetByIdAsync(Guid id);
         Task<IEnumerable<PurchaseOrderDto>> GetAllAsync();
         Task<bool> UpdateAsync(PurchaseOrderDto purchaseOrder);
-        Task<bool> DeleteAsync(string id);
+        Task<bool> DeleteAsync(Guid id);
     }
 }

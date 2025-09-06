@@ -2,24 +2,18 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
-namespace GAC.Integration.Domain.Entities
-{
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Security.Principal;
 
     namespace GAC.Integration.Domain.Entities
     {
         [Table("Customers", Schema = "dbo")]
         public class Customer : EntityBase
         {
-            [Key]
-            [Required]
-            [StringLength(50)]
-            public string ID { get; set; }
-
+            public Customer()
+                {
+                  PurchaseOrders = new HashSet<PurchaseOrder>();
+                  SalesOrders = new HashSet<SalesOrder>();    
+                }
+           
             [Required]
             [StringLength(100)]
             public string ExternalCustomerIdentifier { get; set; }
@@ -30,7 +24,8 @@ namespace GAC.Integration.Domain.Entities
 
             [StringLength(300)]
             public string? Address { get; set; }
-        }
+            public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+            public virtual ICollection<SalesOrder> SalesOrders { get; set; }
     }
 
 }
