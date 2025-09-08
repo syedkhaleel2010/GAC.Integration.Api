@@ -1,9 +1,11 @@
 ﻿using FluentValidation;
 using GAC.Integration.Domain.Dto;
+using GAC.Integration.Domain.Entities;
 using GAC.Integration.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GAC.Integration.Api.Controllers
 {
@@ -105,5 +107,16 @@ namespace GAC.Integration.Api.Controllers
                 return HandleOtherException(ex);
             }
         }
+
+        [HttpPost("bulk-insert")]
+        public async Task<IActionResult> BulkInsertProducts([FromBody] List<ProductDto> productsDto)
+        {
+            if (productsDto == null || !productsDto.Any())
+                return BadRequest("No products provided for bulk insert.");
+
+            return OkServiceResponse(await _productService.BulkInsertProducts(productsDto));
+           
+        }
+
     }
 }

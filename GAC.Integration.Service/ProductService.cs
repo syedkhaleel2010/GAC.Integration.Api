@@ -59,5 +59,25 @@ namespace GAC.Integration.Service
         {
             return await _productRepository.ProductExists(Id);
         }
+        public async Task<bool> BulkInsertProducts(IEnumerable<ProductDto> productsDto)
+        {
+            if (productsDto == null || !productsDto.Any())
+               throw new Exception("No data to insert");
+
+            var products = productsDto.Select(p => new Product
+            {
+                ProductCode = p.ProductCode,
+                Title = p.Title,
+                Description = p.Description,
+                Weight = p.Weight,
+                Height = p.Height,
+                Width = p.Width,
+                Length = p.Length,
+                CreatedAt = DateTime.UtcNow
+            }).ToList();
+            return await _productRepository.BulkInsertProducts(products);
+
+            
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace GAC.Integration.Infrastructure.IRepositories
         Task<ProductDto> GetProductById(Guid id);
         Task<IEnumerable<ProductDto>> GetProducts();
         Task<bool> ProductExists(Guid id);
+        Task<bool> BulkInsertProducts(IEnumerable<Product> products);
     }
 }

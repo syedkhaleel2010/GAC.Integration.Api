@@ -11,6 +11,7 @@ namespace GAC.Integration.Domain.Dto
             Product = new ProductDto();
             SalesOrder = new SalesOrderDto();
         }
+        public Guid ID { get; set; }
         public Guid SalesOrderID { get; set; }
         public Guid ProductID { get; set; }
         public int Quantity { get; set; }

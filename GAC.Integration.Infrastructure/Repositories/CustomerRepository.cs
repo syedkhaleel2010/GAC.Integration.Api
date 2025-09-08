@@ -56,5 +56,15 @@ namespace MG.Marine.Ticketing.SQL.Infrastructure
             var isExist = _dbContext.Customers.Any(x=>x.ID == id);
             return await Task.FromResult(isExist);
         }
+        public async Task<bool> BulkInsertCustomers(IEnumerable<Customer> customers)
+        {
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+           
+                await _dbContext.Customers.AddRangeAsync(customers);
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+            return await Task.FromResult(true);
+        }
     }
 }

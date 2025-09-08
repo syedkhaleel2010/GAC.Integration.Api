@@ -22,7 +22,7 @@ namespace GAC.Integration.Service
             IServiceScopeFactory serviceScopeFactory,
             IMapper mapper,
             ICustomerRepository customerRepository,
-            IValidationService validationService):base(userSession)
+            IValidationService validationService) : base(userSession)
         {
             _logger = logger;
             _userSession = userSession;
@@ -39,7 +39,7 @@ namespace GAC.Integration.Service
             customerDto.ID = Guid.NewGuid();
             customerDto.ExternalCustomerIdentifier = "CUST-" + Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
             var entity = _mapper.Map<Customer>(customerDto);
-            SetCreatedBy(entity); 
+            SetCreatedBy(entity);
             await _customerRepository.CreateCustomer(entity);
             return await Task.FromResult(customerDto);
         }
@@ -52,14 +52,14 @@ namespace GAC.Integration.Service
             var validationFailures = await _validationService.ValidateCustomerDetails(customerDto);
             if (validationFailures.Count > 0)
                 throw new ValidationException("please correct the validation", validationFailures);
-           
+
             if (!await _customerRepository.CustomerExists(customerDto.ID))
                 throw new Exception($"Customer with ID {customerDto.ID} does not exist.");
 
             var entity = _mapper.Map<Customer>(customerDto);
             SetUpdatedBy(entity);
             await _customerRepository.UpdateCustomer(entity);
-            
+
             return await Task.FromResult(customerDto);
         }
 
@@ -69,6 +69,20 @@ namespace GAC.Integration.Service
             _logger.LogInformation("Retrieving all customers.");
             var customers = await _customerRepository.GetCustomers();
             return customers.ToList();
+        }
+        public async Task<bool> BulkInsertCustomers(IEnumerable<CustomerDto> customersDto)
+        {
+            var customers = customersDto.Select(c => new Customer
+            {
+                ID = Guid.NewGuid(),
+                ExternalCustomerIdentifier = "CUST-" + Guid.NewGuid().ToString().Substring(0, 8).ToUpper(),
+                Name = c.Name,
+                Address = c.Address,
+                CreatedAt = DateTime.UtcNow,
+                CreatedBy = _userSession.GetUser().UserName ?? "system"
+            }).ToList();
+
+            return await _customerRepository.BulkInsertCustomers(customers);
         }
     }
 }

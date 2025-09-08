@@ -1,16 +1,13 @@
 ﻿using GAC.Integration.Domain.Dto;
 using GAC.Integration.Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GAC.Integration.Service.Interfaces
 {
-    public interface IUserSession
+    public interface IUserService
     {
-        User GetUser();
-       
+        Task<bool> CreateUser(User entity);
+        Task<bool> UserLogin(User request);
     }
 }

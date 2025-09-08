@@ -15,6 +15,7 @@ namespace GAC.Integration.Infrastructure.Data
         public virtual DbSet<PurchaseOrderItems> PurchaseOrderItems { get; set; }
         public virtual DbSet<SalesOrder> SalesOrders { get; set; }
         public virtual DbSet<SalesOrderItems> SalesOrderItems { get; set; } 
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

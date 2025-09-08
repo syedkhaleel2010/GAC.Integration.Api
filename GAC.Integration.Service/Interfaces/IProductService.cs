@@ -13,5 +13,6 @@ namespace GAC.Integration.Service.Interfaces
         Task<ProductDto> GetProductByIdAsync(Guid productCode);
         Task<IEnumerable<ProductDto>> GetProductsAsync();
         Task<bool> ProductExistsAsync(Guid productCode);
+        Task<bool> BulkInsertProducts(IEnumerable<ProductDto> products);
     }
 }

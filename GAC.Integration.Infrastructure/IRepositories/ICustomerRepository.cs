@@ -9,5 +9,6 @@ namespace GAC.Integration.Infrastructure
         Task<bool> UpdateCustomer(Customer entity);
         Task<bool> CustomerExists(Guid id);
         Task<IEnumerable<CustomerDto>> GetCustomers();
+        Task<bool> BulkInsertCustomers(IEnumerable<Customer> customers);
     }
 }

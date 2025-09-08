@@ -77,5 +77,15 @@ namespace MG.Marine.Ticketing.SQL.Infrastructure
             var exists = await _dbContext.Products.AnyAsync(x => x.ID == id);
             return exists;
         }
+        public async Task<bool> BulkInsertProducts(IEnumerable<Product> products)
+        {
+                using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            
+                await _dbContext.Products.AddRangeAsync(products);
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+                
+            return await Task.FromResult(true);
+        }
     }
 }

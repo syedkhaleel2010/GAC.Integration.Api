@@ -9,5 +9,6 @@ namespace GAC.Integration.Service.Interfaces
         Task<CustomerDto> CreateCustomerAsync(CustomerDto customerDto);
         Task<CustomerDto> UpdateCustomerAsync(CustomerDto customerDto);
         Task<IList<CustomerDto>> GetCustomersAsync();
+        Task<bool> BulkInsertCustomers(IEnumerable<CustomerDto> customers);
     }
 }

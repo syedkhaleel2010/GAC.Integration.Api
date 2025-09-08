@@ -14,7 +14,7 @@ namespace GAC.Integration.Api.Controllers
         private readonly ILogger<CustomersController> _logger;
         private readonly ICustomerService _customerService;
 
-        public CustomersController(ILogger<CustomersController> logger, 
+        public CustomersController(ILogger<CustomersController> logger,
             ICustomerService customerService) : base(logger)
         {
             _logger = logger;
@@ -68,6 +68,15 @@ namespace GAC.Integration.Api.Controllers
                 _logger.LogError(ex, "Error occurred while retrieving customers.");
                 return HandleOtherException(ex);
             }
+        }
+        [HttpPost("bulk-insert")]
+        public async Task<IActionResult> BulkInsertCustomers([FromBody] List<CustomerDto> customersDto)
+        {
+            if (customersDto == null || !customersDto.Any())
+                return BadRequest("No customers provided for bulk insert.");
+
+            return OkServiceResponse(await _customerService.BulkInsertCustomers(customersDto));
+
         }
     }
 }

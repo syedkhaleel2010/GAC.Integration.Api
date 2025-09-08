@@ -44,7 +44,7 @@ builder.Services.AddDbContext(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddDataServices();
 // Fix for 'Configuration' issue
-builder.Services.AddHttpClients(builder.Configuration);
+
 
 // Fix for 'AddCoresAllowAll' issue
 builder.Services.AddCors(options =>

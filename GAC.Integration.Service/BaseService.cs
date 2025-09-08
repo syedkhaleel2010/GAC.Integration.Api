@@ -17,7 +17,7 @@ namespace GAC.Integration.Service
 
         protected string GetUsername()
         {
-            return _userSession?.GetUser()?.Name;
+            return _userSession?.GetUser()?.UserName;
         }
 
         protected void SetCreatedBy(EntityBase entity)

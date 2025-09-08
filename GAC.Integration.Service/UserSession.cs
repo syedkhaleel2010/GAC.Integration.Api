@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using GAC.Integration.Domain.Entities;
 
 namespace GAC.Integration.Service
 {
@@ -40,10 +41,10 @@ namespace GAC.Integration.Service
             {
                 Claim claim2 = claimsIdentity.Claims.FirstOrDefault((Claim x) => x.Type == "USERGROUP");
                 User user = new User();
-                user.Name = claimsIdentity.Name;
-                user.UserGroups = claim2?.Value.Split(new char[1] { ',' });
-                user.Email = claimsIdentity.Claims.FirstOrDefault((Claim e) => e.Type == "EMAIL")?.Value;
-                user.FullName = claimsIdentity.Claims.FirstOrDefault((Claim e) => e.Type == "FULLNAME")?.Value;
+                user.UserName = claimsIdentity.Name;
+               // user.UserGroups = claim2?.Value.Split(new char[1] { ',' });
+                //user.Email = claimsIdentity.Claims.FirstOrDefault((Claim e) => e.Type == "EMAIL")?.Value;
+                //user.FullName = claimsIdentity.Claims.FirstOrDefault((Claim e) => e.Type == "FULLNAME")?.Value;
                 
                 result = user;
             }
